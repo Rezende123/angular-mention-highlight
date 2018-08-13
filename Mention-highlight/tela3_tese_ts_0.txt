@@ -1,0 +1,137 @@
+import { Component, OnInit, ElementRef, ViewEncapsulation } from '@angular/core';
+import { PushProvider } from '../../providers/push';
+import { HighlightTag } from 'angular-text-input-highlight';
+
+
+@Component({
+  selector: 'app-tela3',
+  templateUrl: './tela3.component.html',
+  styleUrls: ['./tela3.component.css'],
+  encapsulation: ViewEncapsulation.None
+})
+export class Tela3Component implements OnInit {
+
+  tags: HighlightTag[] = [];
+  items: string[] = [];
+  HistSelected: string[] = [];
+  favorites: string[] = [];
+  public PerfilF;
+  public Perfil;
+  public count: number = 0;
+  public counter: number = 0;
+  tagClicked: HighlightTag;
+  text: string = '';
+
+
+  constructor(
+    public push: PushProvider
+  ) { }
+
+  ngOnInit(): void {
+    localStorage.setItem('name', "");
+    let names: string[] = [];
+    this.push.pushForLetter("B")
+      .then((res) => {
+        // TODO: mover logica para service
+        for (let i = 0; res[i]; i++) {
+          names[i] = res[i].nome;
+        }
+        this.favorites = names;
+        this.PerfilF = res;
+        //console.log(this.PerfilF);
+      });
+  }
+
+  addTags(name : String) {
+    const c = this.HistSelected.length;
+
+    if (this.HistSelected.indexOf(name) < 0) {
+      this.HistSelected.push(localStorage.getItem('name'));
+    }
+
+    if (this.HistSelected.length > 0) {
+
+      let str = '/(' + this.HistSelected[0];
+      for (let j = 1; this.HistSelected[j]; j++) {
+        str += '|' + this.HistSelected[j];
+      }
+      str += '+) ?/g';
+
+      //console.log(str);
+      this.tags = [];
+      const matchMentions = eval(str);
+      //console.log(matchMentions);
+      let mention;
+      // tslint:disable-next-line
+      while ((mention = matchMentions.exec(this.text))) {
+        console.log()
+        this.tags.push({
+          indices: {
+            start: mention.index,
+            end: mention.index + mention[1].length
+          },
+          data: mention[1]
+        });
+      }
+
+    }
+  }
+
+  addDarkClass(elm: HTMLElement) {
+    if (elm.classList.contains('bg-blue')) {
+      elm.classList.add('bg-blue-dark');
+    } else if (elm.classList.contains('bg-pink')) {
+      elm.classList.add('bg-pink-dark');
+    }
+  }
+
+  removeDarkClass(elm: HTMLElement) {
+    elm.classList.remove('bg-blue-dark');
+    elm.classList.remove('bg-pink-dark');
+  }
+
+  //Menção
+  //Onde se monitora o evento iniciado por @
+  search(e: any) {
+    //Ele pega o código da tabela ascii e separa as teclas que dão erro
+    var tecla = (window.event) ? event.keyCode : e.which;
+
+    if ((tecla != 20) && (tecla != 38) && (tecla != 40)) {
+      if (e.length == 1) this.count = 0; this.items = null;
+      this.count++;
+      //Para diminuir o numero de requisições
+      if (this.count >= 2) {
+        let names: string[] = [];
+        this.push.pushForLetter(e)
+          .then((res) => {
+            for (let i = 0; res[i]; i++) {
+              names[i] = res[i].nome;
+            }
+            this.items = names;
+            this.Perfil = res;
+            //console.log(this.Perfil);
+          });
+        //console.log(this.count);
+        return
+      }
+    }
+
+  }
+
+  ModelItem(name) {
+    localStorage.setItem('name', name.name);
+    return name.name;
+  }
+
+  ShowInput() {
+    var value = document.querySelector('.text-highlight-element').textContent;
+    console.log(value)
+  }
+
+  selectF(index) {
+    console.log(this.PerfilF[index]);
+    localStorage.setItem('name', this.PerfilF[index].nome);
+    this.text += " " + this.PerfilF[index].nome + " ";
+  }
+
+}

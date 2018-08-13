@@ -1,0 +1,28 @@
+/*Serve aos dois*/
+#section1 {padding-top:50px;height:500px;color: #fff; background-color: #1E88E5;}
+#section2 {padding-top:50px;height:500px;color: #fff; background-color: #673ab7;}
+#section3 {padding-top:50px;height:500px;color: #fff; background-color: #ff9800;}
+#section41 {padding-top:50px;height:500px;color: #fff; background-color: #00bcd4;}
+#section42 {padding-top:50px;height:500px;color: #fff; background-color: #009688;}
+@media screen and (max-width: 810px) {
+  #section1, #section2, #section3, #section41, #section42  {
+    margin-left: 150px;
+  }
+}
+
+.conteiner_all{
+  height: -webkit-fill-available;
+}
+
+/*Conteiner_2*/
+#myScrollspy{
+  width: 150px;
+  position: fixed;
+  top: 45px;
+}
+.col-sm-9 {
+  float: right;
+  width: 600px;
+  position: relative;
+}
+
