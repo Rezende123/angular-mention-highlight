@@ -12,6 +12,7 @@ import { TextInputHighlightModule } from  'angular-text-input-highlight' ;
 import { ReactiveFormsModule, FormsModule } from '../../node_modules/@angular/forms';
 import { Tela3Component } from './tela3/tela3.component';
 import { InputTextProvider } from '../providers/InputTextProvider';
+import { MentionComponent } from './mention/mention.component';
 
 
 @NgModule({
@@ -19,7 +20,8 @@ import { InputTextProvider } from '../providers/InputTextProvider';
     AppComponent,
     ListGroupsBSComponent,
     ScrollsspyW3Component,
-    Tela3Component
+    Tela3Component,
+    MentionComponent
   ],
   imports: [
     BrowserModule,

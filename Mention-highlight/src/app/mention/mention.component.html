@@ -15,18 +15,17 @@
             rows="6"
             class="form-control"
             id="input"
-            [(ngModel)]="text"
+            [(ngModel)]="inputText"
             #textarea
-            (input)="refreshHighlight()">
+            (input)="monitoringInput()">
           </textarea>
           <mwl-text-input-highlight
-            id="input"
             [tags]="tags"
             [tagCssClass]="'bg-blue'"
             [textInputElement]="textarea"
             (tagMouseEnter)="addDarkClass($event.target)"
             (tagMouseLeave)="removeDarkClass($event.target)"
-            (tagClick)="tagClicked = $event.tag">
+            (tagClick)="showItem($event.tag.data)">
           </mwl-text-input-highlight>
         </div>
         <br>
@@ -36,11 +35,10 @@
       
     <div>
       <br>
-      <button id="save" class="w3-btn w3-teal" (click)='ShowItem()'>Save</button>//
-      <button id="submit" class="w3-btn w3-teal" (click)='ShowInput()'>submit</button>
+      <button id="save"  class="w3-btn w3-teal" (click)='saveText()'>Save</button><!--<button id="submit" class="w3-btn w3-teal" (click)='download()'>dowload</button>-->
       
-      <div id="favorites" >
-        <button class="button button2" *ngFor = "let f of favoriteProfiles; let i = index" (click)="selectFavorite(f)" >{{f.nome}}</button>
+      <div id="favorites" style="left: -22px;" >
+        <button class="button button2" *ngFor = "let f of favoriteProfiles; let i = index" (click)="selectFavorite(i)" >{{f.nome}}</button>
       </div>
     </div>
   </div>
