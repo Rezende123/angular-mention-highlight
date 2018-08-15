@@ -1,6 +1,5 @@
 import { Http, Headers } from '@angular/http';
 import { Injectable } from '@angular/core';
-import 'module_rxjs_provider/rxjs/add/operator/map';
 
 /*
 
