@@ -37,7 +37,7 @@ export class MentionComponent implements OnInit {
         this.favoriteProfiles = res;
         this.saveObject(this.favoriteProfiles);
       });
-    this.inputTextDatabase.pushText()
+    this.inputTextDatabase.getText()
       .then((res) => {
         this.initializeText(res)
       });   
@@ -249,7 +249,7 @@ export class MentionComponent implements OnInit {
   }
 
   insertDatabase(value){
-    this.inputTextDatabase.pushText()
+    this.inputTextDatabase.getText()
       .then((res) => {
         this.verifyPostOrPutData(res, value);
       });    

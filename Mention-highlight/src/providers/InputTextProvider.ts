@@ -42,7 +42,7 @@ export class InputTextProvider {
     });
   }
 
-  pushText() {
+  getText() {
     return new Promise((resolve, reject) => {
       const cabecalho = new Headers();
       cabecalho.append('Content-Type', 'application/json');
