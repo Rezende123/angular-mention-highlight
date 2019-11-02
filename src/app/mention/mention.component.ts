@@ -12,10 +12,10 @@ import { InputTextProvider } from '../../providers/InputTextProvider';
 export class MentionComponent implements OnInit {
   static wordName: string = '';
   
-  public profiles = [];
-  public favoriteProfiles;
-  public Perfil;
-  public verifyDel = [];
+  profiles = [];
+  favoriteProfiles;
+  Perfil;
+  verifyDel = [];
 
   tags: HighlightTag[] = [];
   items: string[] = [];
@@ -54,7 +54,6 @@ export class MentionComponent implements OnInit {
     }
   }
 
-  //Verifica se novos itens foram inseridos e atualiza as palavras buscadas pelo highlight
   monitoringInput() {
     const newWord = MentionComponent.wordName;
     if (newWord != '') {
@@ -69,22 +68,17 @@ export class MentionComponent implements OnInit {
     }
   }
 
-  //Busca palavras reservadas e verifica se deve fazer um recorte
   seachTagsHighlight() {
     let mentions = this.refreshHighlight();
-    //Verifica se o vetor de nomes está sendo alterado
     this.verifyWords(mentions);
   }
 
-  //Marca as palavras reservadas 
   refreshHighlight() {
     const strQuery = this.buildQuery(this.historySelected);
     this.tags = [];
     const matchMentions = eval(strQuery);
     let mention;
     let mentions = [];
-    //console.log(strQuery);
-    //console.log(matchMentions);
     while ((mention = matchMentions.exec(this.inputText))) {
 
       mentions.push(mention);
@@ -108,8 +102,6 @@ export class MentionComponent implements OnInit {
     return '/(' + str + '+) ?/g';
   }
 
-  //Verifica se alguma palavra reservada foi alterada
-  //Se o teste for verdadeiro, recorta o restante da palavra
   verifyWords(verifyWords: any) {
     if (verifyWords.length < this.verifyDel.length) {
       for (let i = 0; this.verifyDel[i]; i++) {
@@ -124,7 +116,6 @@ export class MentionComponent implements OnInit {
   }
 
   deleteWord(wordDel: any) {
-    //Corta a string do input retirando a palavra
     let start = wordDel.index;
     let end = wordDel.index + (wordDel[0].length - 1);
     let el = document.getElementById("input");
@@ -146,15 +137,11 @@ export class MentionComponent implements OnInit {
     elm.classList.remove('bg-pink-dark');
   }
 
-  //Menção
-  //Onde se monitora o evento iniciado por @
   search(e: any) {
-    //Ele pega o código da tabela ascii e separa as teclas que dão erro
     var tecla = e.key;
 
     if ((tecla != 20) && (tecla != 38) && (tecla != 40)) {
       if (e.length == 1) this.items = null;
-      //Para diminuir o numero de requisições
       if (e.length >= 2) {
         let names: string[] = [];
         this.profileProvider.FindForLetter(e)
@@ -165,7 +152,6 @@ export class MentionComponent implements OnInit {
             this.items = names;
             this.Perfil = res;
             this.saveObject(this.Perfil);
-            //console.log(this.Perfil);
           });
         return 
       }
@@ -183,7 +169,6 @@ export class MentionComponent implements OnInit {
     let selectedObjects = [];
     let index;
     for(let i = 0; this.historySelected[i]; i++) {
-      //Usando a função map só buscamos o campo _id do objeto 
       index = this.profiles.map(function(e) { return e.nome; }).indexOf(this.historySelected[i]);
       if (index >= 0) {
         selectedObjects.push(this.profiles[index]);
@@ -199,7 +184,6 @@ export class MentionComponent implements OnInit {
   }
 
   selectFavorite(index) {
-    //console.log(this.favoriteProfiles[index]);
     let el = document.getElementById("input");
     let name = this.favoriteProfiles[index].nome;
     MentionComponent.wordName = name;
@@ -214,18 +198,13 @@ export class MentionComponent implements OnInit {
     let start = el.selectionStart;
     let end = el.selectionEnd
     this.insertTextInInput((this.inputText.substring(0, start) + (" " + name + " ") + this.inputText.substring(end, this.inputText.length)));
-    //el.setRangeText(" " + name + " ");//Metodo não é suportado no Microsofit Edge
-    //this.inputText = (<HTMLTextAreaElement>el).value
-    //Ele pega o tamanho do nome, a posição em que estava o cursor e o numero de espaçamentos para definir a nova posição do cursor
     let position = name.length + start + 2; 
     el.focus();
     el.setSelectionRange(position, position);
   }
 
   saveObject(profileArray = []){
-    //console.log(profileArray);
     for(let i = 0; profileArray[i]; i++) {
-      //Usando a função map só buscamos o campo _id do objeto 
       if (this.profiles.map(function(e) { return e._id; }).indexOf(profileArray[i]._id) < 0) {
         this.profiles.push(profileArray[i]);
       }
