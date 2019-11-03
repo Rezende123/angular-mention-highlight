@@ -45,8 +45,13 @@ export class MentionComponent implements OnInit {
     if(textComponets.length != 0){
       let index = this.historySelected.length;
       let listDataBase = this.profiles = textComponets[0].listForHighlight;
+
       this.insertTextInInput(textComponets[0].text_input);
-      for (let i = 0; listDataBase[i]; i++) this.historySelected[index + i] = MentionComponent.wordName = listDataBase[i].nome;
+
+      for (let i = 0; listDataBase[i]; i++) {
+        this.historySelected[index + i] = MentionComponent.wordName = listDataBase[i].nome;
+      }
+
       this.saveObject(this.historySelected);
       this.seachTagsHighlight();
     }
@@ -54,6 +59,7 @@ export class MentionComponent implements OnInit {
 
   monitoringInput() {
     const newWord = MentionComponent.wordName;
+
     if (newWord != '') {
       this.updateHistory(newWord);
       this.seachTagsHighlight();
@@ -68,17 +74,18 @@ export class MentionComponent implements OnInit {
 
   seachTagsHighlight() {
     let mentions = this.refreshHighlight();
+
     this.verifyWords(mentions);
   }
 
   refreshHighlight() {
     const strQuery = this.buildQuery(this.historySelected);
-    this.tags = [];
     const matchMentions = eval(strQuery);
     let mention;
     let mentions = [];
-    while ((mention = matchMentions.exec(this.inputText))) {
+    this.tags = [];
 
+    while ((mention = matchMentions.exec(this.inputText))) {
       mentions.push(mention);
 
       this.tags.push({
@@ -94,6 +101,7 @@ export class MentionComponent implements OnInit {
 
   buildQuery(list) {
     let str = list[0];
+
     for (let i = 1; list[i]; i++) {
       str += '|' + list[i];
     }
@@ -117,6 +125,7 @@ export class MentionComponent implements OnInit {
     let start = wordDel.index;
     let end = wordDel.index + (wordDel[0].length - 1);
     let el = document.getElementById("input");
+
     this.insertTextInInput((this.inputText.substring(0, start) + this.inputText.substring(end, this.inputText.length)));
     el.focus();
     (<HTMLTextAreaElement>el).setSelectionRange(start, start);
@@ -166,18 +175,21 @@ export class MentionComponent implements OnInit {
   saveText() {
     let selectedObjects = [];
     let index;
+
     for(let i = 0; this.historySelected[i]; i++) {
       index = this.profiles.map(function(e) { return e.nome; }).indexOf(this.historySelected[i]);
       if (index >= 0) {
         selectedObjects.push(this.profiles[index]);
       }
     }
+
     let id_input = "input";
     let saveDataBase = {
       "id_input": id_input,
       "text_input": this.inputText,
       "listForHighlight": selectedObjects
     }
+
     this.insertDatabase(saveDataBase)
   }
 
@@ -195,8 +207,11 @@ export class MentionComponent implements OnInit {
   setInText(name, el) {
     let start = el.selectionStart;
     let end = el.selectionEnd
+
     this.insertTextInInput((this.inputText.substring(0, start) + (" " + name + " ") + this.inputText.substring(end, this.inputText.length)));
+    
     let position = name.length + start + 2; 
+    
     el.focus();
     el.setSelectionRange(position, position);
   }
