@@ -2,35 +2,30 @@
     <div class="w3-container w3-teal">
       <h2>Test Mentions</h2>
     </div>
-    <form class="w3-container">
-      <!-- <input class="w3-input w3-border w3-sand" autocomplete="off" id="input" type="text" [mention]="items" (searchTerm)='search($event)'  [mentionConfig]="{triggerChar:'@',labelKey:'name'}"></p>
-      -->
-    </form>
-        <div mwlTextInputHighlightContainer style="margin: 15px">
-          <textarea
-            [mention]="items" (searchTerm)='search($event)' [mentionConfig]="{triggerChar:'@', mentionSelect:ModelItem, labelKey:'name'}"
-            mwlTextInputElement
-            rows="6"
-            class="form-control"
-            id="input"
-            [(ngModel)]="inputText"
-            #textarea
-            (input)="monitoringInput()">
-          </textarea>
-          <mwl-text-input-highlight
-            [tags]="tags"
-            [tagCssClass]="'bg-blue'"
-            [textInputElement]="textarea"
-            (tagMouseEnter)="addDarkClass($event.target)"
-            (tagMouseLeave)="removeDarkClass($event.target)"
-            (tagClick)="showItem($event.tag.data)">
-          </mwl-text-input-highlight>
-        </div>
-        <br>
-        <div class="alert alert-info" *ngIf="tagClicked">
-          Tag clicked! {{ tagClicked.data }}
-        </div>
-      
+    <div mwlTextInputHighlightContainer style="margin: 15px">
+      <textarea
+        [mention]="items" (searchTerm)='search($event)' [mentionConfig]="{triggerChar:'@', mentionSelect:ModelItem, labelKey:'name'}"
+        mwlTextInputElement
+        rows="6"
+        class="form-control"
+        id="input"
+        [(ngModel)]="inputText"
+        #textarea
+        (input)="monitoringInput()">
+      </textarea>
+      <mwl-text-input-highlight
+        [tags]="tags"
+        [tagCssClass]="'bg-blue'"
+        [textInputElement]="textarea"
+        (tagMouseEnter)="addDarkClass($event.target)"
+        (tagMouseLeave)="removeDarkClass($event.target)"
+        (tagClick)="showItem($event.tag.data)">
+      </mwl-text-input-highlight>
+    </div>
+    <br>
+    <div class="alert alert-info" *ngIf="tagClicked">
+      Tag clicked! {{ tagClicked.data }}
+    </div>
     <div>
       <br>
       <button id="save"  class="w3-btn w3-teal" (click)='saveText()'>Save</button><!--<button id="submit" class="w3-btn w3-teal" (click)='download()'>dowload</button>-->

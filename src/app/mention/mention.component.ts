@@ -29,8 +29,6 @@ export class MentionComponent implements OnInit {
     public inputTextDatabase: InputTextProvider
   ) { }
 
-
-
   ngOnInit(): void {
     this.profileProvider.FindForLetter("B")
       .then((res) => {

@@ -4,8 +4,6 @@ import { MentionModule } from 'angular-mentions/mention';
 
 import { AppComponent } from './app.component';
 import {ProfileProvider} from '../providers/ProfileProvider';
-import { ListGroupsBSComponent } from './list-groups-bs/list-groups-bs.component';
-import { ScrollsspyW3Component } from './scrollsspy-w3/scrollsspy-w3.component';
 import { HttpClientModule } from '@angular/common/http';
 import { HttpModule } from '@angular/http';
 import { TextInputHighlightModule } from  'angular-text-input-highlight' ;
@@ -17,8 +15,6 @@ import { MentionComponent } from './mention/mention.component';
 @NgModule({
   declarations: [
     AppComponent,
-    ListGroupsBSComponent,
-    ScrollsspyW3Component,
     MentionComponent
   ],
   imports: [
