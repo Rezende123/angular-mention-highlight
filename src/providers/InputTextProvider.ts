@@ -11,6 +11,7 @@ export class InputTextProvider {
 
   constructor(public http: Http) {
   }
+
   postText(creadential) {
     return new Promise((resolve, reject) => {
       const cabecalho = new Headers();

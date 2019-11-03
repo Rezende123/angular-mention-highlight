@@ -1,4 +1,4 @@
-import { Component, OnInit, ElementRef, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { ProfileProvider } from '../../providers/ProfileProvider';
 import { HighlightTag } from 'angular-text-input-highlight';
 import { InputTextProvider } from '../../providers/InputTextProvider';
@@ -30,7 +30,7 @@ export class MentionComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.profileProvider.FindForLetter("B")
+    this.profileProvider.findForLetter("B")
       .then((res) => {
         this.favoriteProfiles = res;
         this.saveObject(this.favoriteProfiles);
@@ -151,7 +151,7 @@ export class MentionComponent implements OnInit {
       if (e.length == 1) this.items = null;
       if (e.length >= 2) {
         let names: string[] = [];
-        this.profileProvider.FindForLetter(e)
+        this.profileProvider.findForLetter(e)
           .then((res) => {
 
             for (let i = 0; res[i]; i++) names[i] = res[i].nome;

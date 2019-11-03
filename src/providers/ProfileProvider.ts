@@ -12,23 +12,7 @@ export class ProfileProvider {
   constructor(public http: Http) {
   }
 
-  listAll() {
-    return new Promise((resolve, reject) => {
-      const cabecalho = new Headers();
-      cabecalho.append('Content-Type', 'application/json');
-
-      this.http.get('http://localhost:8080/perfil/all/', {headers: cabecalho})
-        .subscribe(res => {
-          const data = res.json();
-          //console.log(data);
-          resolve(data);
-        }, err => {
-          reject(err);
-        });
-    });
-  }
-
-  FindForLetter(creadential) {
+  findForLetter(creadential) {
     return new Promise((resolve, reject) => {
       const cabecalho = new Headers();
       cabecalho.append('Content-Type', 'application/json');
@@ -37,21 +21,6 @@ export class ProfileProvider {
         .subscribe(res => {
           const data = res.json();
           //console.log(data);
-          resolve(data);
-        }, err => {
-          reject(err);
-        });
-    });
-  }
-
-  FindForId(creadential){
-    return new Promise((resolve, reject) => {
-      const cabecalho = new Headers();
-      cabecalho.append('Content-Type', 'application/json');
-
-      this.http.get('http://localhost:8080/perfil/id/' + creadential, {headers: cabecalho})
-        .subscribe(res => {
-          const data = res.json();
           resolve(data);
         }, err => {
           reject(err);
